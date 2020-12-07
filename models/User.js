@@ -1,8 +1,7 @@
-const { Mongoose } = require("mongoose");
+const mongoose = require("mongoose");
+var Schema = mongoose.Schema;
 
-const Mongoose = require("mongoose");
-
-const userSchema = Mongoose.Schema({
+const userSchema = new Schema({
 	name: {
 		type: String,
 		maxlength: 50,
@@ -31,5 +30,4 @@ const userSchema = Mongoose.Schema({
 
 // User라는 이름을 가진 userSchema
 const User = mongoose.model("User", userSchema);
-
-module.exports = User;
+module.exports = { User };

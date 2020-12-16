@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../../_actions/user_action";
+import { withRouter } from "react-router-dom";
 
 function LoginPage(props) {
 	const dispatch = useDispatch();
@@ -67,4 +68,4 @@ const LoginDiv = styled.div`
 	}
 `;
 
-export default LoginPage;
+export default withRouter(LoginPage);

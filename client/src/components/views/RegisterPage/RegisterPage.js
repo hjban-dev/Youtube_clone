@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../../../_actions/user_action";
+import { withRouter } from "react-router-dom";
 
 function RegisterPage(props) {
 	const dispatch = useDispatch();
@@ -42,8 +43,8 @@ function RegisterPage(props) {
 		};
 
 		dispatch(registerUser(body)).then((response) => {
-			if (response.payload.loginSuccess) {
-				props.history.push("/");
+			if (response.payload.success) {
+				props.history.push("/login");
 			} else {
 				alert("error");
 			}
@@ -85,4 +86,4 @@ const RegisterDiv = styled.div`
 	}
 `;
 
-export default RegisterPage;
+export default withRouter(RegisterPage);

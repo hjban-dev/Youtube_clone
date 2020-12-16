@@ -1,12 +1,29 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
+import { withRouter } from "react-router-dom";
 
-function LandingPage() {
+function LandingPage(props) {
 	useEffect(() => {
 		axios.get("/api/hello").then((response) => console.log(response));
 	}, []);
-	return <LandingDiv>랜딩 페이지</LandingDiv>;
+
+	const onClickHandler = () => {
+		axios.get("/api/users/logout").then((response) => {
+			if (response.data.success) {
+				props.history.push("/login");
+			} else {
+				alert("로그아웃 실패");
+			}
+		});
+	};
+
+	return (
+		<LandingDiv>
+			시작페이지
+			<button onClick={onClickHandler}>로그아웃</button>
+		</LandingDiv>
+	);
 }
 
 const LandingDiv = styled.div`
@@ -18,4 +35,4 @@ const LandingDiv = styled.div`
 	font-size: 2rem;
 `;
 
-export default LandingPage;
+export default withRouter(LandingPage);

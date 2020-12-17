@@ -1,18 +1,20 @@
 const express = require("express");
 const app = express();
-const port = 8000;
+const port = 5000;
 
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-const { User } = require("./models/User");
+
+const { User } = require("./server/models/User");
+const { auth } = require("./server/middleware/auth");
 
 const mongoose = require("mongoose");
-const config = require("./config/key");
+const config = require("./server/config/key");
 
 app.use(cors());
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
@@ -30,8 +32,12 @@ app.get("/", (req, res) => {
 	res.send("Hello World!");
 });
 
+app.get("/api/hello", (req, res) => {
+	res.send("Hello World!222");
+});
+
 // 회원가입 할 때 필요한 정보들을 cilent 에서 가져오면 그것들을 db에 넣는다.
-app.post("/register", (req, res) => {
+app.post("/api/users/register", (req, res) => {
 	const user = new User(req.body);
 
 	user.save((err, doc) => {
@@ -43,7 +49,7 @@ app.post("/register", (req, res) => {
 });
 
 // 요청된 이메일과 비밀번호 확인
-app.post("/login", (req, res) => {
+app.post("/api/users/login", (req, res) => {
 	User.findOne({ email: req.body.email }, (err, user) => {
 		if (!user)
 			return res.json({
@@ -65,6 +71,29 @@ app.post("/login", (req, res) => {
 		});
 	});
 });
+
+app.get("/api/users/auth", auth, (req, res) => {
+	res.status(200).json({
+		_id: req.user._id,
+		isAdmin: req.user.role === 0 ? false : true,
+		isAuth: true,
+		email: req.user.email,
+		name: req.user.name,
+		lastname: req.user.lastname,
+		role: req.user.role,
+		image: req.user.image,
+	});
+});
+
+app.get("/api/users/logout", auth, (req, res) => {
+	User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, user) => {
+		if (err) return res.json({ success: false, err });
+		return res.status(200).send({
+			success: true,
+		});
+	});
+});
+
 app.listen(port, () => {
 	console.log(`Example app listening at http://localhost:${port}`);
 });

@@ -35,7 +35,7 @@ const userSchema = mongoose.Schema({
 });
 
 userSchema.pre("save", function (next) {
-	var user = this;
+	const user = this;
 
 	if (user.isModified("password")) {
 		// console.log('password changed')
@@ -61,8 +61,8 @@ userSchema.methods.checkPassword = function (plainPassword, cb) {
 };
 
 userSchema.methods.generateToken = function (cb) {
-	var user = this;
-	var token = jwt.sign(user._id.toHexString(), "secret");
+	const user = this;
+	const token = jwt.sign(user._id.toHexString(), "secret");
 
 	user.token = token;
 	user.save(function (err, user) {
@@ -72,10 +72,10 @@ userSchema.methods.generateToken = function (cb) {
 };
 
 userSchema.statics.findByToken = function (token, cb) {
-	var user = this;
+	const user = this;
 
-	jwt.verify(token, "secret", function (err, decode) {
-		user.findOne({ _id: decode, token: token }, function (err, user) {
+	jwt.verify(token, "secret", function (err, decoded) {
+		user.findOne({ _id: decoded, token: token }, function (err, user) {
 			if (err) return cb(err);
 			cb(null, user);
 		});

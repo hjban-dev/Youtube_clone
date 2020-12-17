@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useDropzone } from "react-dropzone";
 import Dropzone from "react-dropzone";
+import Axios from "axios";
 
 const PrivateOption = [
 	{ value: 0, label: "비공개" },
@@ -16,14 +17,22 @@ function VideoUploadPage(props) {
 	const [Private, setPrivate] = useState(0);
 
 	const onDrop = (acceptedFiles) => {
-		let formData = new formData();
+		acceptedFiles.map((file) => setTitle(file.path));
+
+		let formData = new FormData();
+
 		const config = {
 			header: { "content-type": "mutipart/form-data" },
 		};
+
 		formData.append("file", acceptedFiles[0]);
 
-		acceptedFiles.map((file) => {
-			setTitle(file.path);
+		Axios.post("/api/video/uploadfiles", formData, config).then((response) => {
+			if (response.data.success) {
+				console.log(response.data);
+			} else {
+				alert("비디오 업로드 실패");
+			}
 		});
 	};
 
@@ -49,7 +58,7 @@ function VideoUploadPage(props) {
 						</div>
 					</div> */}
 					<div className="drop-container">
-						<Dropzone onDrop={onDrop} multiple={false} maxSize={10000000}>
+						<Dropzone onDrop={onDrop} multiple={false} maxSize={100000000}>
 							{({ getRootProps, getInputProps }) => (
 								<div {...getRootProps()}>
 									<input {...getInputProps()} />

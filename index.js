@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-const port = 5000;
 
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -28,6 +27,10 @@ mongoose
 app.use("/api/users", require("./server/routes/users"));
 app.use("/api/video", require("./server/routes/video"));
 
+app.use("/uploads", express.static("uploads"));
+
+const port = 5000;
+
 app.listen(port, () => {
-	console.log(`Example app listening at http://localhost:${port}`);
+	console.log(`Server Running at ${port}`);
 });

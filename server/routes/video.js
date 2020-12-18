@@ -39,18 +39,18 @@ router.post("/uploadfiles", (req, res) => {
 
 router.post("/thumbnail", (req, res) => {
 	let filePath = "";
+	let filePathList = [];
 	let fileDuration = "";
 
 	// 비디오 정보 가져오기
 	ffmpeg.ffprobe(req.body.url, function (err, metadata) {
-		console.log(metadata);
-		// fileDuration = metadata.format.duration;
+		// console.log(metadata);
+		fileDuration = metadata.format.duration;
 	});
 
 	// 썸네일 생성
 	ffmpeg(req.body.url)
 		.on("filenames", function (filenames) {
-			// console.log(filenames);
 			filePath = "uploads/thumbnails/" + filenames[0];
 		})
 		.on("end", function () {
@@ -64,7 +64,7 @@ router.post("/thumbnail", (req, res) => {
 			{
 				count: 3,
 				folder: "uploads/thumbnails/",
-				size: "320x240",
+				size: "127x70",
 				filename: "thumbnail-%b.png",
 			}
 			// "upload/thumbnails/"

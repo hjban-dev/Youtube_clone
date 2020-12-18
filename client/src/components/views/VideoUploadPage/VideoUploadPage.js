@@ -70,25 +70,37 @@ function VideoUploadPage(props) {
 			<h1>동영상 업로드</h1>
 			<form>
 				<div className="video-zone">
-					<div className="drop-container">
-						<Dropzone onDrop={onDrop} multiple={false} maxSize={100000000}>
-							{({ getRootProps, getInputProps }) => (
-								<div {...getRootProps()}>
-									<input {...getInputProps()} />
-									<img src="/images/upload-icon.jpg" alt="" />
-									<p className="desc">동영상 파일을 드래그 앤 드롭하여 업로드</p>
-									<p className="sub-desc">동영상을 게시하기 전에는 비공개로 설정됩니다.</p>
+					{FilePath ? (
+						<div className="video-container">
+							<video controls>
+								<source src={`http://localhost:5000/${FilePath}`} type="video/mp4" />
+							</video>
+							<div className="thumbnail-wrap">
+								<p>
+									미리보기 이미지
+									<span>동영상의 내용을 알려주는 사진을 선택하거나 업로드하세요. 시청자의 시선을 사로잡을만한 이미지를 사용해 보세요</span>
+								</p>
+								<div className="thumbnail-list">
+									<img src={`http://localhost:5000/${ThumbPath}`} alt="thumbnail" />
+									<img src={`http://localhost:5000/${ThumbPath}`} alt="thumbnail" />
+									<img src={`http://localhost:5000/${ThumbPath}`} alt="thumbnail" />
 								</div>
-							)}
-						</Dropzone>
-					</div>
-					<div className="thumbnail">
-						<p>
-							미리보기 이미지
-							<span>동영상의 내용을 알려주는 사진을 선택하거나 업로드하세요. 시청자의 시선을 사로잡을만한 이미지를 사용해 보세요</span>
-						</p>
-						{ThumbPath && <img src={`http://localhost:3000/${ThumbPath}`} alt="thumbnail" />}
-					</div>
+							</div>
+						</div>
+					) : (
+						<div className="drop-container">
+							<Dropzone onDrop={onDrop} multiple={false} maxSize={10000000000}>
+								{({ getRootProps, getInputProps }) => (
+									<div {...getRootProps()}>
+										<input {...getInputProps()} />
+										<img src="/images/upload-icon.jpg" alt="" />
+										<p className="desc">동영상 파일을 드래그 앤 드롭하여 업로드</p>
+										<p className="sub-desc">동영상을 게시하기 전에는 비공개로 설정됩니다.</p>
+									</div>
+								)}
+							</Dropzone>
+						</div>
+					)}
 				</div>
 				<div className="video-info">
 					<h2>세부정보</h2>
@@ -134,8 +146,39 @@ const VideoUploadPageDiv = styled.div`
 		text-align: left;
 	}
 	> form {
-		width: 80%;
+		width: 90%;
+		max-width: 960px;
 		.video-zone {
+			.video-container {
+				display: flex;
+				justify-content: space-between;
+				video {
+					width: 40%;
+					margin-right: 2%;
+				}
+				.thumbnail-wrap {
+					display: flex;
+					flex-direction: column;
+					width: 60%;
+					> p {
+						span {
+							display: block;
+							padding: 4px 0 6px;
+							font-size: 13px;
+							line-height: 18px;
+							color: #666;
+						}
+					}
+					.thumbnail-list {
+						display: flex;
+						justify-content: start;
+						img {
+							margin-right: 2%;
+							border-radius: 4px;
+						}
+					}
+				}
+			}
 			.drop-container {
 				width: 100%;
 				height: 320px;
@@ -165,23 +208,10 @@ const VideoUploadPageDiv = styled.div`
 					}
 				}
 			}
-			.thumbnail {
-				display: flex;
-				justify-content: space-between;
-				> p {
-					span {
-						display: block;
-						padding-top: 2px;
-						font-size: 13px;
-						line-height: 24px;
-						color: #666;
-					}
-				}
-			}
 		}
 		.video-info {
 			> h2 {
-				margin: 16px 0;
+				margin: 32px 0 16px;
 				font-size: 24px;
 				font-weight: 500;
 			}

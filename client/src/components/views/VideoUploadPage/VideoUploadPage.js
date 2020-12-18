@@ -15,6 +15,9 @@ function VideoUploadPage(props) {
 	const [Title, setTitle] = useState("");
 	const [Desc, setDesc] = useState("");
 	const [Private, setPrivate] = useState(0);
+	const [FilePath, setFilePath] = useState("");
+	const [Dauration, setDauration] = useState("");
+	const [ThumbPath, setThumbPath] = useState("");
 
 	const onDrop = (acceptedFiles) => {
 		acceptedFiles.map((file) => setTitle(file.path));
@@ -30,6 +33,24 @@ function VideoUploadPage(props) {
 		Axios.post("/api/video/uploadfiles", formData, config).then((response) => {
 			if (response.data.success) {
 				console.log(response.data);
+
+				let variable = {
+					url: response.data.url,
+					fileName: response.data.fileName,
+				};
+
+				setFilePath(response.data.url);
+
+				Axios.post("/api/video/thumbnail", variable).then((response) => {
+					if (response.data.success) {
+						console.log(response.data);
+
+						setDauration(response.data.fileDuration);
+						setThumbPath(response.data.url);
+					} else {
+						alert("썸네일 생성 실패");
+					}
+				});
 			} else {
 				alert("비디오 업로드 실패");
 			}
@@ -49,14 +70,6 @@ function VideoUploadPage(props) {
 			<h1>동영상 업로드</h1>
 			<form>
 				<div className="video-zone">
-					{/* <div className="drop-container">
-						<div {...getRootProps({ className: "dropzone" })}>
-							<input {...getInputProps()} />
-							<img src="/images/upload-icon.jpg" alt="" />
-							<p className="desc">동영상 파일을 드래그 앤 드롭하여 업로드</p>
-							<p className="sub-desc">동영상을 게시하기 전에는 비공개로 설정됩니다.</p>
-						</div>
-					</div> */}
 					<div className="drop-container">
 						<Dropzone onDrop={onDrop} multiple={false} maxSize={100000000}>
 							{({ getRootProps, getInputProps }) => (
@@ -74,7 +87,7 @@ function VideoUploadPage(props) {
 							미리보기 이미지
 							<span>동영상의 내용을 알려주는 사진을 선택하거나 업로드하세요. 시청자의 시선을 사로잡을만한 이미지를 사용해 보세요</span>
 						</p>
-						<img src="" alt="" />
+						{ThumbPath && <img src={`http://localhost:3000/${ThumbPath}`} alt="thumbnail" />}
 					</div>
 				</div>
 				<div className="video-info">

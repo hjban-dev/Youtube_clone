@@ -1,12 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { withRouter } from "react-router-dom";
 
 function LandingPage(props) {
-	useEffect(() => {
-		axios.get("/api/hello").then((response) => console.log(response));
-	}, []);
+	const [Video, setVideo] = useState([]);
 
 	const onClickHandler = () => {
 		axios.get("/api/users/logout").then((response) => {
@@ -18,10 +16,25 @@ function LandingPage(props) {
 		});
 	};
 
+	const renderPost = Video.map((video, idx) => {
+		return;
+	});
+
+	useEffect(() => {
+		axios.get("/api/video/getVideos").then((response) => {
+			if (response.data.success) {
+				console.log(response.data);
+				setVideo(response.data.videos);
+			} else {
+				alert("비디오 가져오기 실패");
+			}
+		});
+	}, []);
+
 	return (
 		<LandingDiv>
-			시작페이지
-			<button onClick={onClickHandler}>로그아웃</button>
+			{renderPost}
+			{/* <button onClick={onClickHandler}>로그아웃</button> */}
 		</LandingDiv>
 	);
 }

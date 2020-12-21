@@ -31,7 +31,7 @@ function NavBar(props) {
 						</li>
 						<li>
 							<a href="/">
-								<span>H</span>
+								<span>{user.userData.name.slice(0, 1)}</span>
 							</a>
 						</li>
 					</ul>
@@ -45,9 +45,9 @@ function NavBar(props) {
 				<div className="end no-member">
 					<ul>
 						<li>
-							<a href="/">
+							<Link to="/login" title="동영상 업로드">
 								<img src="/images/header-end-icon1.jpg" alt="" />
-							</a>
+							</Link>
 						</li>
 						<li>
 							<a href="/">

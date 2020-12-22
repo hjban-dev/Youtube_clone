@@ -170,6 +170,8 @@ function VideoUploadPage(props) {
 	);
 }
 
+export default withRouter(VideoUploadPage);
+
 const VideoUploadPageDiv = styled.div`
 	display: flex;
 	align-items: center;
@@ -319,5 +321,3 @@ const VideoUploadPageDiv = styled.div`
 		}
 	}
 `;
-
-export default withRouter(VideoUploadPage);

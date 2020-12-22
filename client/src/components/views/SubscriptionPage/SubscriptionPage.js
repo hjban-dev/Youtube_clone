@@ -60,7 +60,6 @@ function LandingPage(props) {
 	return (
 		<LandingDiv>
 			<VideoPostWrap>{renderPost}</VideoPostWrap>
-			{/* <button onClick={onClickHandler}>로그아웃</button> */}
 		</LandingDiv>
 	);
 }

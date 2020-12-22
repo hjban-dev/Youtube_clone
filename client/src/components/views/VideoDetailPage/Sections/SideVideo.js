@@ -22,7 +22,7 @@ function SideVideo() {
 
 		return (
 			<li key={idx}>
-				<Link to="/" title="">
+				<Link to={`/video/${video._id}`} title="">
 					<div className="img-wrap">
 						<img src={`http://localhost:5000/${video.thumbnail}`} alt="" />
 						<div className="duration">

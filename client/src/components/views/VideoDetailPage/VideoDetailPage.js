@@ -106,6 +106,7 @@ export default withRouter(VideoDetailPage);
 
 const VideoDetailDiv = styled.div`
 	display: flex;
+	height: calc(100% - 56px);
 	padding: 24px;
 	background-color: #f9f9f9;
 	.video-wrap {
@@ -191,6 +192,10 @@ const VideoDetailDiv = styled.div`
 					padding: 10px 16px;
 					min-width: 70px;
 					background-color: rgb(204, 0, 0);
+					&.subscribed {
+						background-color: rgba(0, 0, 0, 0.05);
+						color: rgb(96, 96, 96);
+					}
 				}
 			}
 		}

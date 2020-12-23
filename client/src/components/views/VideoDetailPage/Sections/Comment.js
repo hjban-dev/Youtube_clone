@@ -1,7 +1,35 @@
-import React from "react";
+import Axios from "axios";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
+import { Link, withRouter } from "react-router-dom";
 
-function Comment() {
+function Comment(props) {
+	const user = useSelector((state) => state.user);
+	const videoId = props.match.params.videoId;
+	const [CommentValue, setCommentValue] = useState("");
+
+	const handleClick = (event) => {
+		setCommentValue(event.currentTarget.value);
+	};
+	const onSubmit = (event) => {
+		event.preventDefault();
+
+		let commentVariable = {
+			content: CommentValue,
+			writer: user.userData._id,
+			videoId: videoId,
+		};
+
+		Axios.post("/api/comment/saveComment", commentVariable).then((response) => {
+			if (response.data.success) {
+				console.log(response.data.result);
+			} else {
+				alert("댓글 저장 실패");
+			}
+		});
+	};
+
 	return (
 		<CommentDiv className="comment-wrap">
 			<div className="count-box">
@@ -13,10 +41,12 @@ function Comment() {
 			</div>
 			<div className="input-box">
 				<span className="icon"></span>
-				<div>
-					<input type="text" placeholder="공개 댓글 추가..." />
-					<button type="button">댓글</button>
-				</div>
+				<form onSubmit={onSubmit}>
+					<input type="text" placeholder="공개 댓글 추가..." onChange={handleClick} value={CommentValue} />
+					<button type="button" onClick={onSubmit}>
+						댓글
+					</button>
+				</form>
 			</div>
 			<ul className="comment-list">
 				<li className="comments">
@@ -60,7 +90,7 @@ function Comment() {
 	);
 }
 
-export default Comment;
+export default withRouter(Comment);
 
 const CommentDiv = styled.div`
 	padding: 24px 0;
@@ -95,7 +125,7 @@ const CommentDiv = styled.div`
 			text-align: center;
 			line-height: 40px;
 		}
-		> div {
+		> form {
 			display: flex;
 			justify-content: space-between;
 			align-items: center;

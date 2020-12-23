@@ -1,20 +1,20 @@
 const express = require("express");
 const router = express.Router();
-const { Subscribe } = require("../models/Subscribe");
+const { Subscriber } = require("../models/Subscriber");
 
 // ---------------------------
 // 			Subscribe
 // ---------------------------
 
 router.post("/subscriberNumber", (req, res) => {
-	Subscribe.find({ userTo: req.body.userTo }).exec((err, subscribe) => {
+	Subscriber.find({ userTo: req.body.userTo }).exec((err, subscribe) => {
 		if (err) return res.status(400).json(err);
 		return res.status(200).json({ success: true, subscrberNumber: subscribe.length });
 	});
 });
 
 router.post("/subscribed", (req, res) => {
-	Subscribe.find({ userTo: req.body.userTo, userFrom: req.body.userFrom }).exec((err, subscribe) => {
+	Subscriber.find({ userTo: req.body.userTo, userFrom: req.body.userFrom }).exec((err, subscribe) => {
 		if (err) res.status(400).json(err);
 		let result = false;
 
@@ -27,14 +27,14 @@ router.post("/subscribed", (req, res) => {
 });
 
 router.post("/unsubscribe", (req, res) => {
-	Subscribe.findOneAndDelete({ userTo: req.body.userTo, userFrom: req.body.userFrom }).exec((err, doc) => {
+	Subscriber.findOneAndDelete({ userTo: req.body.userTo, userFrom: req.body.userFrom }).exec((err, doc) => {
 		if (err) res.status(400).json(err);
 		res.status(200).json({ success: true, doc });
 	});
 });
 
 router.post("/subscribe", (req, res) => {
-	const subscribe = new Subscribe(req.body);
+	const subscribe = new Subscriber(req.body);
 
 	subscribe.save((err, doc) => {
 		if (err) res.status(400).json(err);

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Link, withRouter } from "react-router-dom";
 import SideVideo from "./Sections/SideVideo";
 import Subscribe from "./Sections/Subscribe";
+import Comment from "./Sections/Comment";
 
 function VideoDetailPage(props) {
 	const videoId = props.match.params.videoId;
@@ -23,6 +24,8 @@ function VideoDetailPage(props) {
 	}, []);
 
 	if (VideoDetail.writer) {
+		// const subscribeButton = VideoDetail.writer._id === localStorage.getItem("userId") && <Subscribe userTo={VideoDetail.writer._id} userFrom={localStorage.getItem("userId")} />;
+		console.log(localStorage.getItem("userId"), VideoDetail.writer._id);
 		return (
 			<VideoDetailDiv>
 				<div className="video-wrap">
@@ -69,28 +72,10 @@ function VideoDetailPage(props) {
 									<p>{VideoDetail.description}</p>
 								</div>
 							</div>
-							<Subscribe userTo={VideoDetail.writer._id} />
+							{VideoDetail.writer._id !== localStorage.getItem("userId") && <Subscribe userTo={VideoDetail.writer._id} userFrom={localStorage.getItem("userId")} />}
 						</div>
 					</div>
-					<div className="comment-wrap">
-						<div className="count-box">
-							<div>댓글 0개</div>
-							<div>정렬 기준</div>
-						</div>
-						<div>
-							<input type="text" />
-							<button type="button">댓글</button>
-						</div>
-						<ul>
-							<li className="comments">
-								<span className="icon"></span>
-								<div className="txt-wrap">
-									<p className="comment-writer"></p>
-									<p className="comment-desc"></p>
-								</div>
-							</li>
-						</ul>
-					</div>
+					<Comment />
 				</div>
 				<div className="recom-wrap">
 					<SideVideo />
@@ -106,7 +91,7 @@ export default withRouter(VideoDetailPage);
 
 const VideoDetailDiv = styled.div`
 	display: flex;
-	height: calc(100% - 56px);
+	/* height: calc(100% - 56px); */
 	padding: 24px;
 	background-color: #f9f9f9;
 	.video-wrap {
@@ -197,16 +182,6 @@ const VideoDetailDiv = styled.div`
 						color: rgb(96, 96, 96);
 					}
 				}
-			}
-		}
-	}
-	.comment-wrap {
-		padding: 24px 0;
-		.count-box {
-			display: flex;
-			padding-bottom: 24px;
-			div {
-				margin-right: 32px;
 			}
 		}
 	}

@@ -2,34 +2,27 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { Link, withRouter } from "react-router-dom";
+import Sidebar from "../Sidebar/Sidebar";
 
 function LandingPage(props) {
-	const [Video, setVideo] = useState([]);
-
-	const onClickHandler = () => {
-		axios.get("/api/users/logout").then((response) => {
-			if (response.data.success) {
-				props.history.push("/login");
-			} else {
-				alert("로그아웃 실패");
-			}
-		});
-	};
+	const [SubscriptionVideo, setSubscriptionVideo] = useState([]);
 
 	useEffect(() => {
-		axios.get("/api/video/getVideos").then((response) => {
+		const subscriptionVariable = {
+			userFrom: localStorage.getItem("userId"),
+		};
+
+		axios.post("/api/video/getSubscriptionVideos", subscriptionVariable).then((response) => {
 			if (response.data.success) {
 				console.log(response.data);
-				setVideo(response.data.videos);
+				setSubscriptionVideo(response.data.videos);
 			} else {
 				alert("비디오 가져오기 실패");
 			}
 		});
 	}, []);
 
-	const renderPost = Video.map((video, idx) => {
-		// console.log(video);
-
+	const renderPost = SubscriptionVideo.map((video, idx) => {
 		let minutes = Math.floor(video.duration / 60);
 		let seconds = Math.floor(video.duration - minutes * 60);
 
@@ -59,6 +52,7 @@ function LandingPage(props) {
 
 	return (
 		<LandingDiv>
+			<Sidebar />
 			<VideoPostWrap>{renderPost}</VideoPostWrap>
 		</LandingDiv>
 	);
@@ -67,16 +61,17 @@ function LandingPage(props) {
 export default withRouter(LandingPage);
 
 const LandingDiv = styled.div`
+	display: flex;
 	width: 100%;
 	height: calc(100% - 56px);
-	padding: 24px 16px;
-	background-color: #f9f9f9;
 	box-sizing: border-box;
 `;
 
 const VideoPostWrap = styled.div`
 	display: flex;
 	flex-wrap: wrap;
+	padding: 24px 16px;
+	background-color: #f9f9f9;
 	.video-post {
 		width: 25%;
 		padding: 0 8px;

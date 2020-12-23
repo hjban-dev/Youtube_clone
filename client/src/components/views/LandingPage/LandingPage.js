@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { Link, withRouter } from "react-router-dom";
+import Sidebar from "../Sidebar/Sidebar";
 
 function LandingPage(props) {
 	const [Video, setVideo] = useState([]);
@@ -59,6 +60,7 @@ function LandingPage(props) {
 
 	return (
 		<LandingDiv>
+			<Sidebar />
 			<VideoPostWrap>{renderPost}</VideoPostWrap>
 			{/* <button onClick={onClickHandler}>로그아웃</button> */}
 		</LandingDiv>
@@ -69,15 +71,16 @@ export default withRouter(LandingPage);
 
 const LandingDiv = styled.div`
 	width: 100%;
-	height: calc(100% - 56px);
-	padding: 24px 16px;
-	background-color: #f9f9f9;
+	/* height: calc(100% - 56px); */
 	box-sizing: border-box;
+	display: flex;
 `;
 
 const VideoPostWrap = styled.div`
 	display: flex;
 	flex-wrap: wrap;
+	padding: 24px 16px;
+	background-color: #f9f9f9;
 	.video-post {
 		width: 25%;
 		padding: 0 8px;

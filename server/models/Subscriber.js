@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const subscribeSchema = Schema(
+const subscriberSchema = Schema(
 	{
 		userTo: {
 			type: Schema.Types.ObjectId,
@@ -15,5 +15,5 @@ const subscribeSchema = Schema(
 	{ timestamps: true }
 );
 
-const Subscribe = mongoose.model("Subscribe", subscribeSchema);
-module.exports = { Subscribe };
+const Subscriber = mongoose.model("Subscriber", subscriberSchema);
+module.exports = { Subscriber };

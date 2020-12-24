@@ -20,7 +20,7 @@ function LandingPage(props) {
 	useEffect(() => {
 		axios.get("/api/video/getVideos").then((response) => {
 			if (response.data.success) {
-				console.log(response.data);
+				// console.log(response.data);
 				setVideo(response.data.videos);
 			} else {
 				alert("비디오 가져오기 실패");

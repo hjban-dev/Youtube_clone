@@ -5,27 +5,39 @@ import { Link, withRouter } from "react-router-dom";
 import SideVideo from "./Sections/SideVideo";
 import Subscribe from "./Sections/Subscribe";
 import Comment from "./Sections/Comment";
+import LikeDislike from "./Sections/LikeDislike";
 
 function VideoDetailPage(props) {
 	const videoId = props.match.params.videoId;
 	const variable = { videoId: videoId };
 
 	const [VideoDetail, setVideoDetail] = useState([]);
+	const [AllComments, setAllComments] = useState([]);
 
 	useEffect(() => {
 		Axios.post("/api/video/getVideoDetail", variable).then((response) => {
 			if (response.data.success) {
 				setVideoDetail(response.data.video);
-				console.log(response.data.video);
+				// console.log(response.data.video);
 			} else {
 				alert("비디오 정보 가져오기 실패");
 			}
 		});
+
+		Axios.post("/api/comment/getComments", variable).then((response) => {
+			if (response.data.success) {
+				setAllComments(response.data.comments);
+			} else {
+				alert("비디오 댓글 정보 가져오기 실패");
+			}
+		});
 	}, []);
 
+	const refreshFunction = (newComment) => {
+		setAllComments(AllComments.concat(newComment));
+	};
+
 	if (VideoDetail.writer) {
-		// const subscribeButton = VideoDetail.writer._id === localStorage.getItem("userId") && <Subscribe userTo={VideoDetail.writer._id} userFrom={localStorage.getItem("userId")} />;
-		console.log(localStorage.getItem("userId"), VideoDetail.writer._id);
 		return (
 			<VideoDetailDiv>
 				<div className="video-wrap">
@@ -41,27 +53,7 @@ function VideoDetailPage(props) {
 								<p className="video-views">
 									조회수 {VideoDetail.views}회 • {VideoDetail.createdAt.slice(0, 10)}
 								</p>
-								<div className="btn-wrap">
-									<button type="button">
-										<img src="/images/video-detail-icon1.jpg" alt="" />
-										<span>0</span>
-									</button>
-									<button type="button">
-										<img src="/images/video-detail-icon2.jpg" alt="" />
-										<span>0</span>
-									</button>
-									<button type="button">
-										<img src="/images/video-detail-icon3.jpg" alt="" />
-										<span>공유</span>
-									</button>
-									<button type="button">
-										<img src="/images/video-detail-icon4.jpg" alt="" />
-										<span>저장</span>
-									</button>
-									<button type="button">
-										<img src="/images/video-detail-icon5.jpg" alt="" />
-									</button>
-								</div>
+								<LikeDislike video userId={localStorage.getItem("userId")} videoId={videoId} />
 							</div>
 						</div>
 						<div className="writer-wrap">
@@ -75,7 +67,7 @@ function VideoDetailPage(props) {
 							{VideoDetail.writer._id !== localStorage.getItem("userId") && <Subscribe userTo={VideoDetail.writer._id} userFrom={localStorage.getItem("userId")} />}
 						</div>
 					</div>
-					<Comment />
+					<Comment refreshFunction={refreshFunction} commentList={AllComments} />
 				</div>
 				<div className="recom-wrap">
 					<SideVideo />

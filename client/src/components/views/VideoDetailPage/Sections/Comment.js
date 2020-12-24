@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
+import SingleCommnet from "./SingleCommnet";
+import ReplyComment from "./ReplyComment";
 
 function Comment(props) {
 	const user = useSelector((state) => state.user);
@@ -23,12 +25,16 @@ function Comment(props) {
 
 		Axios.post("/api/comment/saveComment", commentVariable).then((response) => {
 			if (response.data.success) {
-				console.log(response.data.result);
+				// console.log(response.data.result);
+				setCommentValue("");
+				props.refreshFunction(response.data.result);
 			} else {
 				alert("댓글 저장 실패");
 			}
 		});
 	};
+
+	// console.log(props);
 
 	return (
 		<CommentDiv className="comment-wrap">
@@ -49,42 +55,16 @@ function Comment(props) {
 				</form>
 			</div>
 			<ul className="comment-list">
-				<li className="comments">
-					<span className="icon"></span>
-					<div className="txt-wrap">
-						<p className="comment-writer">
-							김시우<span className="date">1일 전</span>
-						</p>
-						<p className="comment-desc">생선 엄청커서 심장 좀 클줄알았는데 생각보다 작아ㅋㅋㅋㅋㅋ궈요밍</p>
-						<div className="btn-box">
-							<button>
-								<img src="/images/comment-icon2.jpg" alt="" />
-							</button>
-							<button>
-								<img src="/images/comment-icon3.jpg" alt="" />
-							</button>
-							<button>답글</button>
-						</div>
-					</div>
-				</li>
-				<li className="comments">
-					<span className="icon"></span>
-					<div className="txt-wrap">
-						<p className="comment-writer">
-							김시우<span className="date">1일 전</span>
-						</p>
-						<p className="comment-desc">생선 엄청커서 심장 좀 클줄알았는데 생각보다 작아ㅋㅋㅋㅋㅋ궈요밍</p>
-						<div className="btn-box">
-							<button>
-								<img src="/images/comment-icon2.jpg" alt="" />
-							</button>
-							<button>
-								<img src="/images/comment-icon3.jpg" alt="" />
-							</button>
-							<button>답글</button>
-						</div>
-					</div>
-				</li>
+				{props.commentList &&
+					props.commentList.map(
+						(comment, idx) =>
+							!comment.responseTo && (
+								<li className="comments" key={idx}>
+									<SingleCommnet comment={comment} />
+									{/* <ReplyComment comment={props.commentList} /> */}
+								</li>
+							)
+					)}
 			</ul>
 		</CommentDiv>
 	);
@@ -152,8 +132,10 @@ const CommentDiv = styled.div`
 	.comment-list {
 		padding: 32px 0;
 		li.comments {
-			display: flex;
 			margin-bottom: 16px;
+			.main-comment {
+				display: flex;
+			}
 			.icon {
 				display: inline-block;
 				width: 40px;
@@ -166,6 +148,7 @@ const CommentDiv = styled.div`
 				line-height: 40px;
 			}
 			.txt-wrap {
+				width: 100%;
 				.comment-writer {
 					margin-bottom: 4px;
 					font-size: 13px;
@@ -189,6 +172,29 @@ const CommentDiv = styled.div`
 						&:last-child {
 							padding: 8px 16px;
 						}
+					}
+				}
+				> form {
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					border-bottom: 1px solid #e0e0e0;
+					width: 100%fasdf;
+					padding-bottom: 4px;
+					input {
+						padding: 8px 2px;
+						background: transparent;
+						border: 0;
+						line-height: 20px;
+						width: calc(100% - 70px);
+					}
+					button {
+						width: 70px;
+						height: 40px;
+						line-height: 40px;
+						color: #fff;
+						background-color: #ccc;
+						border-radius: 2px;
 					}
 				}
 			}

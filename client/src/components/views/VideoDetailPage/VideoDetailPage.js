@@ -53,7 +53,20 @@ function VideoDetailPage(props) {
 								<p className="video-views">
 									조회수 {VideoDetail.views}회 • {VideoDetail.createdAt.slice(0, 10)}
 								</p>
-								<LikeDislike video userId={localStorage.getItem("userId")} videoId={videoId} />
+								<div className="btn-wrap">
+									<LikeDislike video userId={localStorage.getItem("userId")} videoId={videoId} />
+									<button type="button">
+										<img src="/images/video-detail-icon3.jpg" alt="" />
+										<span>공유</span>
+									</button>
+									<button type="button">
+										<img src="/images/video-detail-icon4.jpg" alt="" />
+										<span>저장</span>
+									</button>
+									<button type="button">
+										<img src="/images/video-detail-icon5.jpg" alt="" />
+									</button>
+								</div>
 							</div>
 						</div>
 						<div className="writer-wrap">

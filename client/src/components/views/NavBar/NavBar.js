@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { withRouter } from "react-router-dom";
 import { useSelector } from "react-redux";
 import LeftMenu from "./Sections/LeftMenu";
 
@@ -76,12 +75,17 @@ const NavBarDiv = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	height: 40px;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	height: 56px;
 	padding: 8px 16px;
+	z-index: 100;
+	background-color: #fff;
+	box-sizing: border-box;
 	> div {
 		display: flex;
 		align-items: center;
-
 		&.end {
 			justify-content: flex-end;
 			ul {

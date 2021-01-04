@@ -70,10 +70,11 @@ function LandingPage(props) {
 export default withRouter(LandingPage);
 
 const LandingDiv = styled.div`
-	width: 100%;
-	/* height: calc(100% - 56px); */
-	box-sizing: border-box;
 	display: flex;
+	width: 100%;
+	height: 100%;
+	padding-top: 56px;
+	box-sizing: border-box;
 `;
 
 const VideoPostWrap = styled.div`
@@ -82,7 +83,7 @@ const VideoPostWrap = styled.div`
 	padding: 24px 16px;
 	background-color: #f9f9f9;
 	.video-post {
-		width: 25%;
+		width: 16.5%;
 		padding: 0 8px;
 		box-sizing: border-box;
 		a {
@@ -137,6 +138,21 @@ const VideoPostWrap = styled.div`
 					}
 				}
 			}
+		}
+	}
+	@media all and (max-width: 1920px) {
+		.video-post {
+			width: 20%;
+		}
+	}
+	@media all and (max-width: 1440px) {
+		.video-post {
+			width: 25%;
+		}
+	}
+	@media all and (max-width: 1024px) {
+		.video-post {
+			width: 33.33%;
 		}
 	}
 `;

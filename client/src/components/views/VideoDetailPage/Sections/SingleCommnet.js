@@ -2,6 +2,7 @@ import Axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
+import LikeDislike from "./LikeDislike";
 import ReplyComment from "./ReplyComment";
 
 function SingleCommnet(props) {
@@ -47,12 +48,7 @@ function SingleCommnet(props) {
 				</p>
 				<p className="comment-desc">{props.comment.content}</p>
 				<div className="btn-box">
-					<button type="button">
-						<img src="/images/comment-icon2.jpg" alt="" />
-					</button>
-					<button type="button">
-						<img src="/images/comment-icon3.jpg" alt="" />
-					</button>
+					<LikeDislike userId={localStorage.getItem("userId")} commentId={props.comment._id} />
 					<button type="button" onClick={onClickReply}>
 						답글
 					</button>

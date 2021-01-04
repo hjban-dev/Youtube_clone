@@ -72,7 +72,7 @@ const SideVideoUl = styled.ul`
 					border-radius: 4px;
 					font-size: 12px;
 					font-family: Roboto, Arial, sans-serif;
-					letter-spacing: -0.3px;
+					letter-spacing: -0.7px;
 					color: #fff;
 				}
 			}

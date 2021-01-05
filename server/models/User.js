@@ -23,7 +23,6 @@ const userSchema = mongoose.Schema({
 	},
 	image: {
 		type: String,
-		default: "/images/user-icon.jpg",
 	},
 	token: {
 		type: String,

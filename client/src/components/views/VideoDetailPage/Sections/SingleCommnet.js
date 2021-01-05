@@ -16,7 +16,8 @@ function SingleCommnet(props) {
 	};
 
 	const onChangeReply = (event) => {
-		setReplyValue(event.currentTarget.value);
+		let textValue = event.currentTarget.value.replace(/(?:\r\n|\r|\n)/g, "\n");
+		setReplyValue(textValue);
 	};
 
 	const onSubmitReply = (event) => {
@@ -46,7 +47,7 @@ function SingleCommnet(props) {
 					{props.comment.writer.name}
 					<span className="date">1일 전</span>
 				</p>
-				<p className="comment-desc">{props.comment.content}</p>
+				<pre className="comment-desc">{props.comment.content}</pre>
 				<div className="btn-box">
 					<LikeDislike userId={localStorage.getItem("userId")} commentId={props.comment._id} />
 					<button type="button" onClick={onClickReply}>

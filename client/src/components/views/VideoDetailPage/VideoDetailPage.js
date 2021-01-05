@@ -6,6 +6,8 @@ import SideVideo from "./Sections/SideVideo";
 import Subscribe from "./Sections/Subscribe";
 import Comment from "./Sections/Comment";
 import LikeDislike from "./Sections/LikeDislike";
+import { set } from "mongoose";
+import ViewCount from "./Sections/ViewCount";
 
 function VideoDetailPage(props) {
 	const videoId = props.match.params.videoId;
@@ -18,7 +20,6 @@ function VideoDetailPage(props) {
 		Axios.post("/api/video/getVideoDetail", variable).then((response) => {
 			if (response.data.success) {
 				setVideoDetail(response.data.video);
-				// console.log(response.data.video);
 			} else {
 				alert("비디오 정보 가져오기 실패");
 			}
@@ -31,7 +32,7 @@ function VideoDetailPage(props) {
 				alert("비디오 댓글 정보 가져오기 실패");
 			}
 		});
-	}, []);
+	}, [videoId]);
 
 	const refreshFunction = (newComment) => {
 		setAllComments(AllComments.concat(newComment));
@@ -51,7 +52,7 @@ function VideoDetailPage(props) {
 							<p className="video-tit">{VideoDetail.title}</p>
 							<div className="video-info">
 								<p className="video-views">
-									조회수 {VideoDetail.views}회 • {VideoDetail.createdAt.slice(0, 10)}
+									조회수 <ViewCount video={VideoDetail} />회 • {VideoDetail.createdAt.slice(0, 10)}
 								</p>
 								<div className="btn-wrap">
 									<LikeDislike video userId={localStorage.getItem("userId")} videoId={videoId} />

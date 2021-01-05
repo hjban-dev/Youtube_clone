@@ -116,8 +116,8 @@ function VideoUploadPage(props) {
 										</p>
 										<div className="thumbnail-list">
 											<img src={`http://localhost:5000/${ThumbPath}`} alt="thumbnail" />
-											<img src={`http://localhost:5000/${ThumbPath}`} alt="thumbnail" />
-											<img src={`http://localhost:5000/${ThumbPath}`} alt="thumbnail" />
+											<img src={`http://localhost:5000/${ThumbPath.replace(/\w(.png)/g, "2.png")}`} alt="thumbnail" />
+											<img src={`http://localhost:5000/${ThumbPath.replace(/\w(.png)/g, "3.png")}`} alt="thumbnail" />
 										</div>
 									</div>
 								</div>
@@ -177,7 +177,10 @@ const VideoUploadPageDiv = styled.div`
 	display: flex;
 	align-items: center;
 	flex-direction: column;
+	padding-top: 80px;
 	letter-spacing: -0.35px;
+	height: 100%;
+	box-sizing: border-box;
 	&::before {
 		content: "";
 		display: block;
@@ -196,7 +199,8 @@ const VideoUploadPageDiv = styled.div`
 		z-index: 1;
 		width: 100%;
 		max-width: 960px;
-		height: 780px;
+		height: 90%;
+		max-height: 780px;
 		border-radius: 6px;
 		background-color: #fff;
 		> h1 {
@@ -237,6 +241,13 @@ const VideoUploadPageDiv = styled.div`
 							font-size: 13px;
 							color: rgba(0, 0, 0, 0.5);
 						}
+					}
+					button {
+						margin-top: 26px;
+						padding: 8px 16px;
+						background-color: #065fd4;
+						color: #fff;
+						border-radius: 2px;
 					}
 				}
 			}

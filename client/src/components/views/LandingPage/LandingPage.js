@@ -54,8 +54,9 @@ const LandingDiv = styled.div`
 `;
 
 const VideoPostWrap = styled.div`
-	height: 100%;
 	width: 100%;
+	height: auto;
+	min-height: 100%;
 	padding: 24px 16px;
 	box-sizing: border-box;
 	background-color: #f9f9f9;

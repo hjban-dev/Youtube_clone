@@ -19,7 +19,7 @@ function VideoPost({ children, ...info }) {
 					</div>
 				</div>
 				<div className="details-wrap">
-					<span className="icon">{video.writer.name.slice(0, 1)}</span>
+					{video.writer.image ? <img src={video.writer.image} alt="아이콘" /> : <span className="icon">{video.writer.name.slice(0, 1)}</span>}
 					<div className="txt-wrap">
 						<p className="video-tit">{video.title}</p>
 						<p className="video-writer">{video.writer.name}</p>
@@ -77,6 +77,12 @@ const VideoPostDiv = styled.div`
 				color: #fff;
 				text-align: center;
 				line-height: 36px;
+			}
+			> img {
+				width: 36px;
+				height: 36px;
+				margin: 0 12px 0 0;
+				border-radius: 100%;
 			}
 			.txt-wrap {
 				width: calc(99% - 48px);

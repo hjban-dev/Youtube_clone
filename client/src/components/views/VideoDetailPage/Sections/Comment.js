@@ -134,67 +134,79 @@ const CommentDiv = styled.div`
 		li.comments {
 			margin-bottom: 16px;
 			.main-comment {
-				display: flex;
-			}
-			.icon {
-				display: inline-block;
-				width: 40px;
-				height: 40px;
-				margin: 2px 16px 0 0;
-				background: #78909c;
-				border-radius: 100%;
-				color: #fff;
-				text-align: center;
-				line-height: 40px;
-			}
-			.txt-wrap {
-				width: 100%;
-				.comment-writer {
-					margin-bottom: 4px;
-					font-size: 13px;
-					line-height: 20px;
-					.date {
-						margin-left: 4px;
-					}
+				.icon {
+					display: inline-block;
+					width: 40px;
+					height: 40px;
+					margin: 2px 16px 0 0;
+					background: #78909c;
+					border-radius: 100%;
+					color: #fff;
+					text-align: center;
+					line-height: 40px;
+					vertical-align: top;
 				}
-				.comment-desc {
-					font-size: 14px;
-					line-height: 20px;
-				}
-				.btn-box {
-					margin-top: 4px;
-					button {
-						padding: 8px;
-						img {
-							width: 16px;
-							vertical-align: bottom;
-						}
-						&:last-child {
-							padding: 8px 16px;
-						}
-					}
-				}
-				> form {
-					display: flex;
-					justify-content: space-between;
-					align-items: center;
-					border-bottom: 1px solid #e0e0e0;
-					width: 100%fasdf;
-					padding-bottom: 4px;
-					input {
-						padding: 8px 2px;
-						background: transparent;
-						border: 0;
+				.txt-wrap {
+					display: inline-block;
+					width: calc(100% - 70px);
+					.comment-writer {
+						margin-bottom: 4px;
+						font-size: 13px;
 						line-height: 20px;
-						width: calc(100% - 70px);
+						.date {
+							margin-left: 4px;
+						}
 					}
-					button {
-						width: 70px;
-						height: 40px;
-						line-height: 40px;
-						color: #fff;
-						background-color: #ccc;
-						border-radius: 2px;
+					.comment-desc {
+						font-size: 14px;
+						line-height: 20px;
+						font-family: Roboto, Arial, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+						white-space: pre-wrap;
+					}
+					.btn-box {
+						margin-top: 4px;
+						button {
+							padding: 8px;
+							img {
+								width: 16px;
+								margin-right: 8px;
+								vertical-align: bottom;
+							}
+							&:nth-child(2) {
+								span {
+									display: none;
+								}
+							}
+							&:last-child {
+								padding: 8px 16px;
+							}
+							span {
+								color: #606060;
+							}
+						}
+					}
+					> form {
+						display: flex;
+						justify-content: space-between;
+						align-items: center;
+						border-bottom: 1px solid #e0e0e0;
+						width: 100%fasdf;
+						padding-bottom: 4px;
+						input {
+							padding: 8px 2px;
+							background: transparent;
+							border: 0;
+							line-height: 20px;
+							width: calc(100% - 70px);
+						}
+						button {
+							width: 70px;
+							height: 40px;
+							line-height: 40px;
+							color: #fff;
+							background-color: #ccc;
+							border-radius: 2px;
+						}
 					}
 				}
 			}

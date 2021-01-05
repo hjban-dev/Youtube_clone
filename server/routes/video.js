@@ -91,6 +91,13 @@ router.get("/getVideos", (req, res) => {
 		});
 });
 
+router.post("/views", (req, res) => {
+	Video.findOneAndUpdate({ _id: req.body.videoId }, { $set: { views: req.body.views } }, function (err, viewsResult) {
+		if (err) return res.status(400).send(err);
+		res.status(200).json({ success: true, viewsResult });
+	});
+});
+
 router.post("/getVideoDetail", (req, res) => {
 	Video.findOne({ _id: req.body.videoId })
 		.populate("writer")

@@ -11,7 +11,7 @@ function LikeDislike(props) {
 
 	if (props.video) {
 		// 비디오 관련 좋아요
-		likeVariable = { ideoId: props.videoId, userId: props.userId };
+		likeVariable = { videoId: props.videoId, userId: props.userId };
 	} else {
 		// 댓글 관련 좋아요
 		likeVariable = { commentId: props.commentId, userId: props.userId };
@@ -105,12 +105,12 @@ function LikeDislike(props) {
 
 	return (
 		<>
-			<button type="button" onClick={onLike} className={LikeAction === "liked" ? "active" : ""}>
-				<img src="/images/video-detail-icon1.jpg" alt="" />
+			<button type="button" onClick={onLike}>
+				{LikeAction === "liked" ? <img src="/images/video-detail-icon1-on.jpg" alt="" /> : <img src="/images/video-detail-icon1.jpg" alt="" />}
 				<span>{Likes}</span>
 			</button>
-			<button type="button" onClick={onDislike} className={DislikeAction === "disliked" ? "active" : ""}>
-				<img src="/images/video-detail-icon2.jpg" alt="" />
+			<button type="button" onClick={onDislike}>
+				{DislikeAction === "disliked" ? <img src="/images/video-detail-icon2-on.jpg" alt="" /> : <img src="/images/video-detail-icon2.jpg" alt="" />}
 				<span>{Dislikes}</span>
 			</button>
 		</>

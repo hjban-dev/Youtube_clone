@@ -17,15 +17,14 @@ const userSchema = mongoose.Schema({
 		type: String,
 		minglength: 5,
 	},
-	lastname: {
-		type: String,
-		maxlength: 50,
-	},
 	role: {
 		type: Number,
 		default: 0,
 	},
-	image: String,
+	image: {
+		type: String,
+		default: "/images/user-icon.jpg",
+	},
 	token: {
 		type: String,
 	},

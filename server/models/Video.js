@@ -9,7 +9,7 @@ const videoSchema = Schema(
 		},
 		title: {
 			type: String,
-			maxlength: 50,
+			maxlength: 250,
 		},
 		description: {
 			type: String,

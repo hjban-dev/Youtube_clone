@@ -84,10 +84,16 @@ const SideVideoUl = styled.ul`
 					line-height: 18px;
 					color: rgb(96, 96, 96);
 					.video-tit {
-						margin-bottom: 4px;
+						margin-bottom: 2px;
 						font-size: 14px;
 						color: #000;
 						line-height: 20px;
+						max-height: 40px;
+						display: -webkit-box;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						-webkit-line-clamp: 2;
+						-webkit-box-orient: vertical;
 					}
 				}
 			}

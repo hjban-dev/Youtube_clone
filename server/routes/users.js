@@ -13,7 +13,8 @@ router.post("/register", (req, res) => {
 	const user = new User(req.body);
 
 	user.save((err, doc) => {
-		if (err) return res.json({ success: false, err });
+		// console.log(err);
+		if (err) return res.status(400).send(err);
 		return res.status(200).json({
 			success: true,
 		});
@@ -51,7 +52,6 @@ router.get("/auth", auth, (req, res) => {
 		isAuth: true,
 		email: req.user.email,
 		name: req.user.name,
-		lastname: req.user.lastname,
 		role: req.user.role,
 		image: req.user.image,
 	});

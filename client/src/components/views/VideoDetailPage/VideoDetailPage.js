@@ -74,7 +74,7 @@ function VideoDetailPage(props) {
 								<span className="icon">에</span>
 								<div>
 									<p className="writer">{VideoDetail.writer.name}</p>
-									<p>{VideoDetail.description}</p>
+									<pre>{VideoDetail.description}</pre>
 								</div>
 							</div>
 							{VideoDetail.writer._id !== localStorage.getItem("userId") && <Subscribe userTo={VideoDetail.writer._id} userFrom={localStorage.getItem("userId")} />}
@@ -96,8 +96,8 @@ export default withRouter(VideoDetailPage);
 
 const VideoDetailDiv = styled.div`
 	display: flex;
-	/* height: calc(100% - 56px); */
 	padding: 24px;
+	padding-top: 80px;
 	background-color: #f9f9f9;
 	.video-wrap {
 		width: calc(100% - 402px);
@@ -146,13 +146,12 @@ const VideoDetailDiv = styled.div`
 				}
 			}
 			.writer-wrap {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
+				width: 100%;
 				padding: 16px 0;
 				border-bottom: 1px solid #e0e0e0;
 				.video-writer-info {
-					display: flex;
+					display: inline-block;
+					width: calc(100% - 100px);
 					font-size: 14px;
 					color: rgb(3, 3, 3);
 					.icon {
@@ -166,7 +165,9 @@ const VideoDetailDiv = styled.div`
 						text-align: center;
 						line-height: 50px;
 					}
-					div {
+					> div {
+						float: right;
+						width: calc(100% - 60px);
 						.writer {
 							padding-bottom: 12px;
 							line-height: 50px;
@@ -175,13 +176,19 @@ const VideoDetailDiv = styled.div`
 						p {
 							line-height: 22px;
 						}
+						pre {
+							font-family: Roboto, Arial, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+							line-height: 22px;
+						}
 					}
 				}
 				button {
 					color: #fff;
+					float: right;
 					padding: 10px 16px;
 					min-width: 70px;
 					background-color: rgb(204, 0, 0);
+					vertical-align: top;
 					&.subscribed {
 						background-color: rgba(0, 0, 0, 0.05);
 						color: rgb(96, 96, 96);

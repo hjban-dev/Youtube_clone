@@ -130,7 +130,7 @@ const CommentDiv = styled.div`
 		}
 	}
 	.comment-list {
-		padding: 32px 0;
+		padding: 32px 0 0;
 		li.comments {
 			margin-bottom: 16px;
 			.main-comment {

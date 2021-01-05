@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -6,6 +7,16 @@ import LeftMenu from "./Sections/LeftMenu";
 
 function NavBar(props) {
 	const user = useSelector((state) => state.user);
+
+	const onClickHandler = () => {
+		axios.get("/api/users/logout").then((response) => {
+			if (response.data.success) {
+				props.history.push("/login");
+			} else {
+				alert("로그아웃 실패");
+			}
+		});
+	};
 
 	if (user.userData && user.userData.isAuth) {
 		return (
@@ -29,7 +40,7 @@ function NavBar(props) {
 							</a>
 						</li>
 						<li>
-							<a href="/">
+							<a href="/" onClick={onClickHandler}>
 								<span>{user.userData.name.slice(0, 1)}</span>
 							</a>
 						</li>
@@ -49,12 +60,12 @@ function NavBar(props) {
 							</Link>
 						</li>
 						<li>
-							<a href="/">
+							<a href="/login">
 								<img src="/images/header-end-icon2.jpg" alt="" />
 							</a>
 						</li>
 						<li>
-							<a href="/">
+							<a href="/login">
 								<img src="/images/header-end-icon4.jpg" alt="" />
 							</a>
 						</li>

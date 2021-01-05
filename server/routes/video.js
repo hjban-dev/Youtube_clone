@@ -66,7 +66,7 @@ router.post("/thumbnail", (req, res) => {
 			{
 				count: 3,
 				folder: "uploads/thumbnails/",
-				size: "127x70",
+				size: "250x137",
 				filename: "thumbnail-%b.png",
 			}
 			// "upload/thumbnails/"

@@ -7,7 +7,7 @@ import LoginPage from "./views/LoginPage/LoginPage";
 import RegisterPage from "./views/RegisterPage/RegisterPage";
 import VideoUploadPage from "./views/VideoUploadPage/VideoUploadPage";
 import VideoDetailPage from "./views/VideoDetailPage/VideoDetailPage";
-import SubscriptionPage from "./views/SubscriptionPage/SubscriptionPage";
+import SubscriptionPage from "./views/LandingPage/SubscriptionPage";
 
 import Auth from "../hoc/auth";
 

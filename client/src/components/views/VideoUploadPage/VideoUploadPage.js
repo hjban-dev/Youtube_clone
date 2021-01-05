@@ -65,7 +65,8 @@ function VideoUploadPage(props) {
 	};
 
 	const onDescHandler = (event) => {
-		setDesc(event.currentTarget.value);
+		let textValue = event.currentTarget.value.replace(/(?:\r\n|\r|\n)/g, "\n");
+		setDesc(textValue);
 	};
 
 	const onPrivateChange = (event) => {
@@ -151,7 +152,7 @@ function VideoUploadPage(props) {
 						</>
 					) : (
 						<div className="drop-container">
-							<Dropzone onDrop={onDrop} multiple={false} maxSize={10000000000}>
+							<Dropzone onDrop={onDrop} multiple={false} maxSize={1000000000000}>
 								{({ getRootProps, getInputProps }) => (
 									<div {...getRootProps()}>
 										<input {...getInputProps()} />
@@ -265,6 +266,7 @@ const VideoUploadPageDiv = styled.div`
 							display: flex;
 							justify-content: start;
 							img {
+								width: 127px;
 								margin-right: 2%;
 								border-radius: 4px;
 							}

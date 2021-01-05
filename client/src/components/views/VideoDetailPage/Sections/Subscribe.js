@@ -57,8 +57,8 @@ function Subscribe(props) {
 	};
 
 	return (
-		<div>
-			{SubscriberNumber}
+		<>
+			{/* {SubscriberNumber} */}
 			{Subscribed ? (
 				<button type="button" onClick={onSubscribeHandler} className="subscribed">
 					구독중
@@ -68,7 +68,7 @@ function Subscribe(props) {
 					구독
 				</button>
 			)}
-		</div>
+		</>
 	);
 }
 

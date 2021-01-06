@@ -72,7 +72,7 @@ function VideoDetailPage(props) {
 						</div>
 						<div className="writer-wrap">
 							<div className="video-writer-info">
-								<span className="icon">에</span>
+								{VideoDetail.writer.image ? <img src={VideoDetail.writer.image} alt="아이콘" /> : <span className="icon">{VideoDetail.writer.name.slice(0, 1)}</span>}
 								<div>
 									<p className="writer">{VideoDetail.writer.name}</p>
 									<pre>{VideoDetail.description}</pre>
@@ -165,6 +165,12 @@ const VideoDetailDiv = styled.div`
 						color: #fff;
 						text-align: center;
 						line-height: 50px;
+					}
+					> img {
+						width: 48px;
+						height: 48px;
+						margin: 0 12px 0 0;
+						border-radius: 100%;
 					}
 					> div {
 						float: right;

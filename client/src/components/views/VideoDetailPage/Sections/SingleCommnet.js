@@ -41,7 +41,8 @@ function SingleCommnet(props) {
 
 	return (
 		<div className="main-comment">
-			<span className="icon"></span>
+			{props.comment.writer.image ? <img src={props.comment.writer.image} alt="아이콘" /> : <span className="icon">{user.userData.name.slice(0, 2)}</span>}
+
 			<div className="txt-wrap">
 				<p className="comment-writer">
 					{props.comment.writer.name}
@@ -49,7 +50,7 @@ function SingleCommnet(props) {
 				</p>
 				<pre className="comment-desc">{props.comment.content}</pre>
 				<div className="btn-box">
-					<LikeDislike userId={localStorage.getItem("userId")} commentId={props.comment._id} />
+					<LikeDislike userId={user.userData._id} commentId={props.comment._id} />
 					<button type="button" onClick={onClickReply}>
 						답글
 					</button>

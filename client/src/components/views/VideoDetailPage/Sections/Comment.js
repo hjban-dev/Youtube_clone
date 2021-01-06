@@ -1,5 +1,5 @@
 import Axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
@@ -10,9 +10,11 @@ function Comment(props) {
 	const user = useSelector((state) => state.user);
 	const videoId = props.match.params.videoId;
 	const [CommentValue, setCommentValue] = useState("");
+	const [IsComment, setIsComment] = useState(false);
 
 	const handleClick = (event) => {
 		setCommentValue(event.currentTarget.value);
+		event.currentTarget.value !== "" ? setIsComment(true) : setIsComment(false);
 	};
 	const onSubmit = (event) => {
 		event.preventDefault();
@@ -25,8 +27,8 @@ function Comment(props) {
 
 		Axios.post("/api/comment/saveComment", commentVariable).then((response) => {
 			if (response.data.success) {
-				// console.log(response.data.result);
 				setCommentValue("");
+				setIsComment(false);
 				props.refreshFunction(response.data.result);
 			} else {
 				alert("댓글 저장 실패");
@@ -34,22 +36,21 @@ function Comment(props) {
 		});
 	};
 
-	// console.log(props);
-
 	return (
 		<CommentDiv className="comment-wrap">
 			<div className="count-box">
-				<div>댓글 0개</div>
+				<div>댓글 {props.commentList.length}개</div>
 				<div className="count-sort">
 					<img src="/images/comment-icon1.jpg" alt="" />
 					정렬 기준
 				</div>
 			</div>
 			<div className="input-box">
-				<span className="icon"></span>
+				{user.userData.image ? <img src={user.userData.image} alt="아이콘" /> : <span className="icon">{user.userData.name.slice(0, 2)}</span>}
+
 				<form onSubmit={onSubmit}>
 					<input type="text" placeholder="공개 댓글 추가..." onChange={handleClick} value={CommentValue} />
-					<button type="button" onClick={onSubmit}>
+					<button type="button" onClick={onSubmit} className={IsComment ? "active" : ""}>
 						댓글
 					</button>
 				</form>
@@ -105,6 +106,12 @@ const CommentDiv = styled.div`
 			text-align: center;
 			line-height: 40px;
 		}
+		> img {
+			width: 40px;
+			height: 40px;
+			margin-right: 16px;
+			border-radius: 100%;
+		}
 		> form {
 			display: flex;
 			justify-content: space-between;
@@ -117,7 +124,7 @@ const CommentDiv = styled.div`
 				background: transparent;
 				border: 0;
 				line-height: 20px;
-				width: calc(100% - 70px);
+				width: calc(100% - 80px);
 			}
 			button {
 				width: 70px;
@@ -126,6 +133,10 @@ const CommentDiv = styled.div`
 				color: #fff;
 				background-color: #ccc;
 				border-radius: 2px;
+				&.active {
+					color: #fff;
+					background-color: #065fd4;
+				}
 			}
 		}
 	}
@@ -144,6 +155,13 @@ const CommentDiv = styled.div`
 					color: #fff;
 					text-align: center;
 					line-height: 40px;
+					vertical-align: top;
+				}
+				> img {
+					width: 40px;
+					height: 40px;
+					margin: 2px 16px 0 0;
+					border-radius: 100%;
 					vertical-align: top;
 				}
 				.txt-wrap {
@@ -197,7 +215,7 @@ const CommentDiv = styled.div`
 							background: transparent;
 							border: 0;
 							line-height: 20px;
-							width: calc(100% - 70px);
+							width: calc(100% - 80px);
 						}
 						button {
 							width: 70px;
